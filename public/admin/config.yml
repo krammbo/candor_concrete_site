@@ -12,7 +12,7 @@ backend:
   name: github
   repo: krammbo/candor_concrete_site
   branch: main
-  base_url: https://REPLACE-WITH-OAUTH-RELAY # <-- still needed: your sveltia-cms-auth URL
+  base_url: https://sveltia-cms-auth.kramm-eythan.workers.dev
 
 # Local editing (dev only): uncomment to write directly to local files via
 # `npx decap-server`. Must stay OFF in production so the GitHub backend is used.
