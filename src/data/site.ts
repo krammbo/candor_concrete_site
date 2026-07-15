@@ -113,6 +113,18 @@ export const serviceAreas: ServiceArea[] = [
   },
 ];
 
+/**
+ * Convert a 24-hour "HH:MM" string (used for schema.org data) into a friendly
+ * 12-hour label for display, e.g. "07:00" -> "7:00 AM", "17:00" -> "5:00 PM".
+ */
+export function to12Hour(time24: string): string {
+  const [hStr, mStr = '00'] = time24.split(':');
+  let hour = parseInt(hStr, 10);
+  const period = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12 || 12;
+  return `${hour}:${mStr} ${period}`;
+}
+
 /** Primary navigation links. */
 export const mainNav = [
   { label: 'Services', href: '/services/' },

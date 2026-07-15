@@ -1,5 +1,5 @@
 ---
-import { site, mainNav, serviceAreas } from '../data/site';
+import { site, mainNav, serviceAreas, to12Hour } from '../data/site';
 import { getCollection } from 'astro:content';
 
 const services = (await getCollection('services'))
@@ -65,7 +65,7 @@ const year = new Date().getFullYear();
       </ul>
       <h3 class="text-sand text-base mt-5 mb-2">Hours</h3>
       <ul class="space-y-1 text-sm">
-        {site.hours.map((h) => <li>{h.days}: {h.open}–{h.close}</li>)}
+        {site.hours.map((h) => <li>{h.days}: {to12Hour(h.open)} – {to12Hour(h.close)}</li>)}
       </ul>
     </div>
   </div>

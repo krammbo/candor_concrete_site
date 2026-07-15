@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { site, serviceAreas } from '../data/site';
+import { site, serviceAreas, to12Hour } from '../data/site';
 
 const services = (await getCollection('services'))
   .filter((s) => !s.data.draft)
@@ -128,7 +128,7 @@ const thankYouURL = new URL('/thank-you/', Astro.site).toString();
       <div class="rounded-lg border border-sand-dark bg-sand-light p-6">
         <h2 class="text-xl text-ink">Hours</h2>
         <ul class="mt-4 space-y-2 text-ink-soft">
-          {site.hours.map((h) => <li class="flex justify-between gap-4"><span>{h.days}</span><span>{h.open}–{h.close}</span></li>)}
+          {site.hours.map((h) => <li class="flex justify-between gap-4"><span>{h.days}</span><span>{to12Hour(h.open)} – {to12Hour(h.close)}</span></li>)}
         </ul>
       </div>
     </aside>
