@@ -1,0 +1,71 @@
+---
+import { site, serviceAreas } from '../data/site';
+
+/**
+ * LocalBusiness (GeneralContractor) JSON-LD. Rendered once site-wide in the
+ * base layout so Google can build a rich local listing.
+ */
+const dayMap: Record<string, string> = {
+  Monday: 'Monday',
+  Tuesday: 'Tuesday',
+  Wednesday: 'Wednesday',
+  Thursday: 'Thursday',
+  Friday: 'Friday',
+  Saturday: 'Saturday',
+  Sunday: 'Sunday',
+};
+
+const openingHours = site.hours.map((h) => {
+  // Expand ranges like "Monday – Friday" into individual days for schema.
+  const parts = h.days.split('–').map((p) => p.trim());
+  const order = Object.keys(dayMap);
+  let days: string[];
+  if (parts.length === 2) {
+    const start = order.indexOf(parts[0]);
+    const end = order.indexOf(parts[1]);
+    days = order.slice(start, end + 1);
+  } else {
+    days = [parts[0]];
+  }
+  return {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: days,
+    opens: h.open,
+    closes: h.close,
+  };
+});
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'GeneralContractor',
+  '@id': `${Astro.site}#business`,
+  name: site.legalName,
+  alternateName: site.name,
+  description: site.description,
+  url: Astro.site?.toString(),
+  telephone: site.phone,
+  email: site.email,
+  image: new URL('/og-default.jpg', Astro.site).toString(),
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  areaServed: serviceAreas.map((a) => ({
+    '@type': 'City',
+    name: `${a.city}, ${a.state}`,
+  })),
+  openingHoursSpecification: openingHours,
+  sameAs: [site.social.instagram, site.social.facebook].filter(Boolean),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

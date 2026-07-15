@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const services = (await getCollection('services'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Concrete Services in Greenville, SC"
+  description="Full-service concrete contractor in Greenville, SC: driveways, patios, foundations, stamped concrete, overlays, and commercial work. Free estimates."
+>
+  <section class="bg-ink text-cream">
+    <div class="container-wide py-16">
+      <p class="script-accent text-xl">What We Do</p>
+      <h1 class="mt-2 text-4xl sm:text-5xl text-cream">Concrete Services</h1>
+      <p class="mt-4 max-w-2xl text-cream/85">
+        From driveways to foundations, we deliver durable, high-quality concrete
+        across Greenville and the Upstate — built on honesty, focused on quality.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-16">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        services.map((s) => (
+          <ServiceCard
+            title={s.data.title}
+            summary={s.data.summary}
+            href={`/services/${s.id}/`}
+            image={s.data.image}
+            imageAlt={s.data.imageAlt}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

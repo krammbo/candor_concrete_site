@@ -1,0 +1,24 @@
+---
+interface Props {
+  name: string;
+  location?: string;
+  quote: string;
+  rating?: number;
+}
+const { name, location, quote, rating = 5 } = Astro.props;
+const stars = Math.max(0, Math.min(5, Math.round(rating)));
+---
+
+<figure class="flex flex-col rounded-lg bg-cream border border-sand-dark p-6">
+  <div class="flex text-orange" aria-label={`${stars} out of 5 stars`}>
+    {Array.from({ length: 5 }).map((_, i) => (
+      <svg width="18" height="18" viewBox="0 0 20 20" fill={i < stars ? 'currentColor' : 'none'} stroke="currentColor" stroke-width="1.5">
+        <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 15.9 4.8 17.6l1-5.8L1.5 7.7l5.9-.9z" />
+      </svg>
+    ))}
+  </div>
+  <blockquote class="mt-4 flex-1 text-ink-soft leading-relaxed">“{quote}”</blockquote>
+  <figcaption class="mt-4 font-semibold text-ink">
+    {name}{location && <span class="font-normal text-ink-soft"> — {location}</span>}
+  </figcaption>
+</figure>

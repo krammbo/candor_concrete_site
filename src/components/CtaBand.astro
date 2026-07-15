@@ -1,0 +1,26 @@
+---
+import Button from './Button.astro';
+import { site } from '../data/site';
+
+interface Props {
+  heading?: string;
+  text?: string;
+}
+const {
+  heading = 'Ready for concrete done right?',
+  text = 'Get a free, honest estimate from a team that shows up and does quality work.',
+} = Astro.props;
+---
+
+<section class="bg-orange text-cream">
+  <div class="container-wide flex flex-col items-center gap-5 py-14 text-center">
+    <h2 class="text-3xl sm:text-4xl text-cream max-w-2xl">{heading}</h2>
+    <p class="max-w-xl text-cream/90">{text}</p>
+    <div class="flex flex-col sm:flex-row gap-3">
+      <Button href="/contact/" variant="secondary">Get a Free Estimate</Button>
+      <Button href={site.phoneHref} variant="outline" class="!border-cream !text-cream hover:!bg-cream hover:!text-orange">
+        Call {site.phone}
+      </Button>
+    </div>
+  </div>
+</section>

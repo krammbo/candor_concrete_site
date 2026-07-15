@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+
+/* Self-hosted fonts (no external font-CDN request — better performance + privacy) */
+@import '@fontsource/anton/400.css';
+@import '@fontsource/work-sans/400.css';
+@import '@fontsource/work-sans/500.css';
+@import '@fontsource/work-sans/600.css';
+@import '@fontsource/work-sans/700.css';
+@import '@fontsource/kaushan-script/400.css';
+
+/*
+  Brand system derived from the Candor Concrete logo (retro/vintage):
+  cream sand background, burnt orange, charcoal ink.
+*/
+@theme {
+  --color-sand: #e9e4cb;
+  --color-sand-light: #f5f2e6;
+  --color-sand-dark: #ddd7ba;
+  --color-orange: #c85a2c;
+  --color-orange-dark: #a8461f;
+  --color-ink: #1e1b18;
+  --color-ink-soft: #3a342f;
+  --color-cream: #faf8f0;
+
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  --font-body: 'Work Sans', system-ui, sans-serif;
+  --font-script: 'Kaushan Script', cursive;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--color-ink-soft);
+    background-color: var(--color-cream);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* Respect reduced-motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  .script-accent {
+    font-family: var(--font-script);
+    text-transform: none;
+    color: var(--color-orange);
+    letter-spacing: 0;
+  }
+
+  /* Reusable content container */
+  .container-wide {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+}

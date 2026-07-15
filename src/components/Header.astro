@@ -1,0 +1,70 @@
+---
+import Logo from './Logo.astro';
+import Button from './Button.astro';
+import { site, mainNav } from '../data/site';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="sticky top-0 z-50 bg-sand/95 backdrop-blur border-b border-sand-dark">
+  <div class="container-wide flex items-center justify-between gap-4 py-3">
+    <Logo />
+
+    <nav class="hidden lg:flex items-center gap-6" aria-label="Primary">
+      {
+        mainNav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'text-sm font-semibold uppercase tracking-wide transition-colors hover:text-orange',
+              isActive(item.href) ? 'text-orange' : 'text-ink',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="hidden sm:flex items-center gap-3">
+      <a href={site.phoneHref} class="text-sm font-bold text-ink hover:text-orange whitespace-nowrap">
+        {site.phone}
+      </a>
+      <Button href="/contact/" class="!px-4 !py-2">Get Estimate</Button>
+    </div>
+
+    <!-- Mobile menu toggle (CSS-only via hidden checkbox) -->
+    <label for="nav-toggle" class="lg:hidden cursor-pointer p-2 -mr-2" aria-label="Open menu">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </label>
+  </div>
+
+  <input type="checkbox" id="nav-toggle" class="peer hidden" />
+  <div class="hidden peer-checked:block lg:!hidden border-t border-sand-dark bg-sand">
+    <nav class="container-wide flex flex-col py-3" aria-label="Mobile">
+      {
+        mainNav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'py-2 text-sm font-semibold uppercase tracking-wide',
+              isActive(item.href) ? 'text-orange' : 'text-ink',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a href={site.phoneHref} class="py-2 text-sm font-bold text-orange">
+        Call {site.phone}
+      </a>
+      <Button href="/contact/" class="mt-2 w-full">Get Estimate</Button>
+    </nav>
+  </div>
+</header>

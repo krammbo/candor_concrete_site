@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import GoogleReviews from '../components/GoogleReviews.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const testimonials = (await getCollection('testimonials')).sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
+);
+---
+
+<BaseLayout
+  title="Customer Reviews | Candor Concrete, Greenville SC"
+  description="See what Greenville-area homeowners say about Candor Concrete. Read our latest Google reviews and customer testimonials."
+>
+  <section class="bg-ink text-cream">
+    <div class="container-wide py-16">
+      <p class="script-accent text-xl">Testimonials</p>
+      <h1 class="mt-2 text-4xl sm:text-5xl text-cream">Customer Reviews</h1>
+      <p class="mt-4 max-w-2xl text-cream/85">
+        We let our work — and our customers — speak for us.
+      </p>
+    </div>
+  </section>
+
+  <!-- Live Google reviews (Featurable) -->
+  <section class="container-wide py-16">
+    <h2 class="text-2xl sm:text-3xl">Our Google Reviews</h2>
+    <p class="mt-2 text-ink-soft">Pulled live from our Google Business Profile.</p>
+    <div class="mt-6">
+      <GoogleReviews />
+    </div>
+  </section>
+
+  {
+    testimonials.length > 0 && (
+      <section class="bg-sand py-16">
+        <div class="container-wide">
+          <h2 class="text-2xl sm:text-3xl">More From Our Customers</h2>
+          <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {testimonials.map((t) => (
+              <TestimonialCard
+                name={t.data.name}
+                location={t.data.location}
+                quote={t.data.quote}
+                rating={t.data.rating}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaBand heading="Join our happy customers" />
+</BaseLayout>

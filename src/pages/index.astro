@@ -1,0 +1,188 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import GoogleReviews from '../components/GoogleReviews.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, serviceAreas } from '../data/site';
+
+const services = (await getCollection('services'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const testimonials = (await getCollection('testimonials')).sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
+);
+
+const featuredGallery = (await getCollection('gallery'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .filter((g) => g.data.featured)
+  .slice(0, 6);
+
+const values = [
+  {
+    title: 'Built on Honesty',
+    text: 'Straight answers and clear, itemized estimates. If a repair makes more sense than a replacement, we’ll tell you.',
+  },
+  {
+    title: 'Focused on Quality',
+    text: 'Proper base prep, correct reinforcement, and clean finishes — concrete built to last for decades.',
+  },
+  {
+    title: 'Local & Reliable',
+    text: 'A Greenville-based team that shows up on time, communicates, and treats your property with respect.',
+  },
+];
+---
+
+<BaseLayout
+  title="Concrete Contractor in Greenville, SC"
+  description={site.description}
+>
+  <!-- Hero -->
+  <section class="relative bg-ink text-cream overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-ink via-ink to-orange-dark/40" aria-hidden="true"></div>
+    <div class="container-wide relative grid gap-8 py-20 lg:grid-cols-2 lg:items-center lg:py-28">
+      <div>
+        <p class="script-accent text-xl">Built on Honesty. Focused on Quality.</p>
+        <h1 class="mt-2 text-4xl sm:text-5xl lg:text-6xl text-cream">
+          Concrete Done Right in <span class="text-orange">Greenville, SC</span>
+        </h1>
+        <p class="mt-5 max-w-xl text-lg text-cream/85">
+          Durable, high-quality residential concrete — driveways, patios,
+          foundations, stamped concrete, and overlays — built to last across
+          the Upstate.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <Button href="/contact/">Get a Free Estimate</Button>
+          <Button href={site.phoneHref} variant="outline" class="!border-cream !text-cream hover:!bg-cream hover:!text-ink">
+            Call {site.phone}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values / why us -->
+  <section class="container-wide py-16">
+    <div class="grid gap-6 md:grid-cols-3">
+      {
+        values.map((v) => (
+          <div class="rounded-lg border border-sand-dark bg-sand-light p-6">
+            <h2 class="text-xl text-ink">{v.title}</h2>
+            <p class="mt-2 text-ink-soft leading-relaxed">{v.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="bg-sand py-16">
+    <div class="container-wide">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl sm:text-4xl">Our Concrete Services</h2>
+        <p class="mt-3 text-ink-soft">
+          Residential and commercial concrete for the Greenville area, done with
+          craftsmanship you can trust.
+        </p>
+      </div>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          services.map((s) => (
+            <ServiceCard
+              title={s.data.title}
+              summary={s.data.summary}
+              href={`/services/${s.id}/`}
+              image={s.data.image}
+              imageAlt={s.data.imageAlt}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    featuredGallery.length > 0 && (
+      <section class="container-wide py-16">
+        <div class="flex items-end justify-between gap-4">
+          <h2 class="text-3xl sm:text-4xl">Recent Work</h2>
+          <a href="/gallery/" class="font-semibold uppercase tracking-wide text-orange hover:text-orange-dark whitespace-nowrap">
+            View gallery →
+          </a>
+        </div>
+        <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {featuredGallery.map((g) => (
+            <img
+              src={g.data.image}
+              alt={g.data.alt}
+              width="600"
+              height="450"
+              loading="lazy"
+              class="aspect-[4/3] w-full rounded-lg object-cover"
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Reviews -->
+  <section class="bg-sand py-16">
+    <div class="container-wide">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl sm:text-4xl">What Our Customers Say</h2>
+        <p class="mt-3 text-ink-soft">Real reviews from Greenville-area homeowners.</p>
+      </div>
+      {
+        testimonials.length > 0 && (
+          <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {testimonials.slice(0, 3).map((t) => (
+              <TestimonialCard
+                name={t.data.name}
+                location={t.data.location}
+                quote={t.data.quote}
+                rating={t.data.rating}
+              />
+            ))}
+          </div>
+        )
+      }
+      <div class="mt-8">
+        <GoogleReviews />
+      </div>
+      <div class="mt-6">
+        <Button href="/reviews/" variant="secondary">Read More Reviews</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service areas -->
+  <section class="container-wide py-16">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl">Areas We Serve</h2>
+      <p class="mt-3 text-ink-soft">
+        Proudly serving Greenville and communities across Upstate SC and Western NC.
+      </p>
+    </div>
+    <ul class="mt-6 flex flex-wrap gap-3">
+      {
+        serviceAreas.map((a) => (
+          <li>
+            <a
+              href={`/service-areas/${a.slug}/`}
+              class="inline-block rounded-full border border-sand-dark bg-sand-light px-4 py-2 text-sm font-semibold text-ink hover:border-orange hover:text-orange"
+            >
+              {a.city}, {a.state}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

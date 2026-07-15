@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+
+const values = [
+  { title: 'Transparency', text: 'Clear estimates and straight answers — no surprises, no upsells you don’t need.' },
+  { title: 'Craftsmanship', text: 'We do the unglamorous prep work right, because that’s what makes concrete last.' },
+  { title: 'Reliability', text: 'We show up, communicate, and finish what we start.' },
+  { title: 'Respect', text: 'Your property is treated with care from the first day to final cleanup.' },
+];
+---
+
+<BaseLayout
+  title="About Candor Concrete | Greenville, SC Concrete Contractor"
+  description="Candor Concrete is a Greenville, SC concrete contractor built on honesty and quality. Learn about our values and our commitment to durable, high-quality work."
+>
+  <section class="bg-ink text-cream">
+    <div class="container-wide py-16 lg:py-20">
+      <p class="script-accent text-xl">Our Story</p>
+      <h1 class="mt-2 text-4xl sm:text-5xl text-cream max-w-3xl">
+        Honesty and Quality at the Core of Everything We Do
+      </h1>
+    </div>
+  </section>
+
+  <section class="container-wide py-16 grid gap-10 lg:grid-cols-2 lg:items-start">
+    <div class="space-y-4 text-lg leading-relaxed text-ink-soft">
+      <p>
+        Candor Concrete Company was founded on a simple idea: concrete work
+        should be honest, high-quality, and built to last. Our name says it all —
+        candor means being straightforward and truthful, and that’s how we treat
+        every customer and every project.
+      </p>
+      <p>
+        We provide top-quality residential concrete services across Greenville,
+        the Upstate of South Carolina, and Western North Carolina — with an
+        emphasis on precision, reliability, and superior craftsmanship. From
+        driveways and patios to foundations, stamped concrete, and overlays, we
+        take pride in delivering durable solutions that stand the test of time.
+      </p>
+      <p>
+        When you work with us, you get transparency, hard work, and results you
+        can trust. That’s the Candor difference.
+      </p>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {
+        values.map((v) => (
+          <div class="rounded-lg border border-sand-dark bg-sand-light p-5">
+            <h2 class="text-lg text-ink">{v.title}</h2>
+            <p class="mt-2 text-sm text-ink-soft leading-relaxed">{v.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand heading="Let’s build something that lasts" />
+</BaseLayout>

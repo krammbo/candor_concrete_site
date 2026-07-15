@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/Button.astro';
+import GoogleReviews from '../../components/GoogleReviews.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { site, serviceAreas } from '../../data/site';
+
+export const getStaticPaths = (async () => {
+  return serviceAreas.map((area) => ({
+    params: { slug: area.slug },
+    props: { area },
+  }));
+}) satisfies GetStaticPaths;
+
+const { area } = Astro.props;
+const cityState = `${area.city}, ${area.state}`;
+
+const services = (await getCollection('services'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+// Local Service schema pointing at this specific city.
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: `Concrete Contractor in ${cityState}`,
+  provider: { '@id': `${Astro.site}#business` },
+  areaServed: { '@type': 'City', name: cityState },
+  url: new URL(`/service-areas/${area.slug}/`, Astro.site).toString(),
+};
+---
+
+<BaseLayout
+  title={`Concrete Contractor in ${cityState} | Candor Concrete`}
+  description={`Looking for a concrete contractor in ${cityState}? Candor Concrete builds driveways, patios, foundations & stamped concrete with honesty and quality. Free estimates — call ${site.phone}.`}
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <section class="bg-ink text-cream">
+    <div class="container-wide py-14">
+      <nav class="text-sm text-cream/70" aria-label="Breadcrumb">
+        <a href="/service-areas/" class="hover:text-orange">Service Areas</a>
+        <span class="mx-1">/</span>
+        <span>{cityState}</span>
+      </nav>
+      <h1 class="mt-3 text-4xl sm:text-5xl text-cream">Concrete Contractor in {cityState}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-cream/85">{area.blurb}</p>
+      <div class="mt-7 flex flex-col sm:flex-row gap-3">
+        <Button href="/contact/">Get a Free Estimate</Button>
+        <Button href={site.phoneHref} variant="outline" class="!border-cream !text-cream hover:!bg-cream hover:!text-ink">
+          Call {site.phone}
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-wide py-16">
+    <div class="max-w-3xl space-y-4 text-lg leading-relaxed text-ink-soft">
+      <p>
+        Candor Concrete is proud to serve homeowners and businesses in {cityState}
+        with dependable, high-quality concrete work. Whether you’re planning a new
+        driveway, a backyard patio, a solid foundation, or a decorative stamped
+        surface, our {area.city}-area customers get the same thing every time:
+        honest estimates and craftsmanship built to last.
+      </p>
+      <p>
+        As a local Upstate company, we understand the soil, weather, and freeze-thaw
+        cycles that concrete in {area.city} has to stand up to — and we prep, reinforce,
+        and finish every job accordingly.
+      </p>
+    </div>
+
+    <h2 class="mt-12 text-2xl sm:text-3xl">Our Services in {area.city}</h2>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        services.map((s) => (
+          <a href={`/services/${s.id}/`}
+            class="rounded-lg border border-sand-dark bg-sand-light p-5 hover:border-orange">
+            <h3 class="text-lg text-ink">{s.data.shortTitle ?? s.data.title}</h3>
+            <p class="mt-1 text-sm text-ink-soft">{s.data.summary}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-sand py-16">
+    <div class="container-wide">
+      <h2 class="text-2xl sm:text-3xl">Reviews from the {area.city} Area</h2>
+      <div class="mt-6">
+        <GoogleReviews />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading={`Need concrete work in ${area.city}?`} />
+</BaseLayout>

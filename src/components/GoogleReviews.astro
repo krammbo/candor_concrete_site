@@ -1,0 +1,42 @@
+---
+import { site } from '../data/site';
+
+/**
+ * Embeds the Featurable widget, which auto-syncs Google reviews daily.
+ * Set `featurableWidgetId` in src/data/site.ts once the widget is created —
+ * new Google reviews then appear automatically with no code changes.
+ * Until then, a friendly fallback prompts visitors to view/leave a Google review.
+ */
+interface Props {
+  /** Google Business Profile review link for the fallback CTA. */
+  reviewUrl?: string;
+}
+const { reviewUrl = 'https://www.google.com/search?q=Candor+Concrete+Company+Greenville+SC' } =
+  Astro.props;
+
+const widgetId = site.featurableWidgetId;
+---
+
+{
+  widgetId ? (
+    <div>
+      <div id={`featurable-${widgetId}`} data-featurable-async></div>
+      <script src="https://featurable.com/assets/bundle.js" is:inline async charset="utf-8"></script>
+    </div>
+  ) : (
+    <div class="rounded-lg border border-dashed border-sand-dark bg-cream p-8 text-center">
+      <p class="text-ink-soft">
+        Our live Google reviews will appear here. In the meantime, see what our
+        customers are saying on Google.
+      </p>
+      <a
+        href={reviewUrl}
+        target="_blank"
+        rel="noopener"
+        class="mt-4 inline-flex items-center gap-2 font-semibold uppercase tracking-wide text-orange hover:text-orange-dark"
+      >
+        View us on Google →
+      </a>
+    </div>
+  )
+}

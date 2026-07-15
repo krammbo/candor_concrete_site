@@ -1,0 +1,136 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, serviceAreas } from '../data/site';
+
+const services = (await getCollection('services'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const formAction = site.formspreeId
+  ? `https://formspree.io/f/${site.formspreeId}`
+  : site.emailHref;
+const thankYouURL = new URL('/thank-you/', Astro.site).toString();
+---
+
+<BaseLayout
+  title="Contact & Free Estimate | Candor Concrete, Greenville SC"
+  description="Request a free concrete estimate in Greenville, SC. Call (864) 914-9200 or send us your project details and we’ll get right back to you."
+>
+  <section class="bg-ink text-cream">
+    <div class="container-wide py-16">
+      <p class="script-accent text-xl">Get in Touch</p>
+      <h1 class="mt-2 text-4xl sm:text-5xl text-cream">Request a Free Estimate</h1>
+      <p class="mt-4 max-w-2xl text-cream/85">
+        Tell us about your project and we’ll get back to you with an honest,
+        no-pressure estimate. Prefer to talk? Give us a call.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-16 grid gap-12 lg:grid-cols-[1.2fr_1fr]">
+    <!-- Form -->
+    <div>
+      <form
+        action={formAction}
+        method="POST"
+        class="grid gap-5"
+      >
+        <input type="hidden" name="_subject" value="New estimate request from candorcrete.com" />
+        {site.formspreeId && <input type="hidden" name="_next" value={thankYouURL} />}
+        <!-- Honeypot spam trap -->
+        <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-semibold text-ink">Name *</span>
+            <input required type="text" name="name" autocomplete="name"
+              class="mt-1 w-full rounded-md border border-sand-dark bg-cream px-3 py-2 focus:border-orange focus:outline-none" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-semibold text-ink">Phone *</span>
+            <input required type="tel" name="phone" autocomplete="tel"
+              class="mt-1 w-full rounded-md border border-sand-dark bg-cream px-3 py-2 focus:border-orange focus:outline-none" />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="text-sm font-semibold text-ink">Email</span>
+          <input type="email" name="email" autocomplete="email"
+            class="mt-1 w-full rounded-md border border-sand-dark bg-cream px-3 py-2 focus:border-orange focus:outline-none" />
+        </label>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-semibold text-ink">Service Needed</span>
+            <select name="service"
+              class="mt-1 w-full rounded-md border border-sand-dark bg-cream px-3 py-2 focus:border-orange focus:outline-none">
+              <option value="">Select a service…</option>
+              {services.map((s) => <option value={s.data.title}>{s.data.title}</option>)}
+              <option value="Other">Other / Not sure</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="text-sm font-semibold text-ink">City</span>
+            <select name="city"
+              class="mt-1 w-full rounded-md border border-sand-dark bg-cream px-3 py-2 focus:border-orange focus:outline-none">
+              <option value="">Select your city…</option>
+              {serviceAreas.map((a) => <option value={`${a.city}, ${a.state}`}>{a.city}, {a.state}</option>)}
+              <option value="Other">Other</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="text-sm font-semibold text-ink">Project Details</span>
+          <textarea name="message" rows="5"
+            placeholder="Tell us what you’re looking to have done, approximate size, and timeframe."
+            class="mt-1 w-full rounded-md border border-sand-dark bg-cream px-3 py-2 focus:border-orange focus:outline-none"></textarea>
+        </label>
+
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center rounded-md bg-orange px-6 py-3 font-semibold uppercase tracking-wide text-sm text-cream transition-colors hover:bg-orange-dark"
+        >
+          Send My Request
+        </button>
+
+        {
+          !site.formspreeId && (
+            <p class="text-xs text-ink-soft">
+              Note: connect a Formspree form ID in <code>src/data/site.ts</code> to
+              receive submissions by email. Until then this button opens your email app.
+            </p>
+          )
+        }
+      </form>
+    </div>
+
+    <!-- Contact details -->
+    <aside class="space-y-6">
+      <div class="rounded-lg border border-sand-dark bg-sand-light p-6">
+        <h2 class="text-xl text-ink">Contact Details</h2>
+        <ul class="mt-4 space-y-3 text-ink-soft">
+          <li>
+            <span class="block text-xs font-semibold uppercase tracking-wide text-ink-soft/70">Phone</span>
+            <a href={site.phoneHref} class="text-lg font-bold text-orange hover:text-orange-dark">{site.phone}</a>
+          </li>
+          <li>
+            <span class="block text-xs font-semibold uppercase tracking-wide text-ink-soft/70">Email</span>
+            <a href={site.emailHref} class="hover:text-orange">{site.email}</a>
+          </li>
+          <li>
+            <span class="block text-xs font-semibold uppercase tracking-wide text-ink-soft/70">Location</span>
+            {site.address.city}, {site.address.region} {site.address.postalCode}
+          </li>
+        </ul>
+      </div>
+      <div class="rounded-lg border border-sand-dark bg-sand-light p-6">
+        <h2 class="text-xl text-ink">Hours</h2>
+        <ul class="mt-4 space-y-2 text-ink-soft">
+          {site.hours.map((h) => <li class="flex justify-between gap-4"><span>{h.days}</span><span>{h.open}–{h.close}</span></li>)}
+        </ul>
+      </div>
+    </aside>
+  </section>
+</BaseLayout>

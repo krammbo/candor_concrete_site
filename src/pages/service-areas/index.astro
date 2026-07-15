@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { serviceAreas } from '../../data/site';
+---
+
+<BaseLayout
+  title="Service Areas | Candor Concrete, Greenville SC & Upstate"
+  description="Candor Concrete serves Greenville, Travelers Rest, Easley, Greer, Spartanburg, Simpsonville SC and Asheville & Hendersonville NC with quality concrete work."
+>
+  <section class="bg-ink text-cream">
+    <div class="container-wide py-16">
+      <p class="script-accent text-xl">Where We Work</p>
+      <h1 class="mt-2 text-4xl sm:text-5xl text-cream">Service Areas</h1>
+      <p class="mt-4 max-w-2xl text-cream/85">
+        Based in Greenville, we bring honest, high-quality concrete work to
+        homeowners across Upstate South Carolina and Western North Carolina.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-16">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        serviceAreas.map((a) => (
+          <a
+            href={`/service-areas/${a.slug}/`}
+            class="group rounded-lg border border-sand-dark bg-sand-light p-6 transition-shadow hover:shadow-lg"
+          >
+            <h2 class="text-2xl text-ink group-hover:text-orange transition-colors">
+              {a.city}, {a.state}
+            </h2>
+            <p class="mt-2 text-ink-soft leading-relaxed">{a.blurb}</p>
+            <span class="mt-4 inline-block text-sm font-semibold uppercase tracking-wide text-orange">
+              View area →
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

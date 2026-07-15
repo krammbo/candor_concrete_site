@@ -1,0 +1,81 @@
+---
+import { site, mainNav, serviceAreas } from '../data/site';
+import { getCollection } from 'astro:content';
+
+const services = (await getCollection('services'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-ink text-sand/80 mt-20">
+  <div class="container-wide grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <span class="font-display text-2xl text-orange">
+        CANDOR<span class="text-sand"> CONCRETE</span>
+      </span>
+      <p class="script-accent mt-1">Built on Honesty. Focused on Quality.</p>
+      <p class="mt-4 text-sm leading-relaxed">
+        Honest, high-quality residential concrete serving Greenville, SC and the Upstate.
+      </p>
+      <div class="mt-4 flex gap-3">
+        <a href={site.social.instagram} class="hover:text-orange" aria-label="Instagram" rel="noopener" target="_blank">Instagram</a>
+        <span aria-hidden="true">·</span>
+        <a href={site.social.facebook} class="hover:text-orange" aria-label="Facebook" rel="noopener" target="_blank">Facebook</a>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-sand text-lg mb-4">Services</h2>
+      <ul class="space-y-2 text-sm">
+        {
+          services.map((s) => (
+            <li>
+              <a href={`/services/${s.id}/`} class="hover:text-orange">
+                {s.data.shortTitle ?? s.data.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-sand text-lg mb-4">Service Areas</h2>
+      <ul class="space-y-2 text-sm">
+        {
+          serviceAreas.map((a) => (
+            <li>
+              <a href={`/service-areas/${a.slug}/`} class="hover:text-orange">
+                {a.city}, {a.state}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-sand text-lg mb-4">Contact</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href={site.phoneHref} class="hover:text-orange font-semibold">{site.phone}</a></li>
+        <li><a href={site.emailHref} class="hover:text-orange">{site.email}</a></li>
+        <li>{site.address.city}, {site.address.region} {site.address.postalCode}</li>
+      </ul>
+      <h3 class="text-sand text-base mt-5 mb-2">Hours</h3>
+      <ul class="space-y-1 text-sm">
+        {site.hours.map((h) => <li>{h.days}: {h.open}–{h.close}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-sand/15">
+    <div class="container-wide flex flex-col sm:flex-row items-center justify-between gap-2 py-5 text-xs text-sand/60">
+      <p>&copy; {year} {site.legalName}. All rights reserved.</p>
+      <nav class="flex flex-wrap gap-4" aria-label="Footer">
+        {mainNav.map((item) => <a href={item.href} class="hover:text-orange">{item.label}</a>)}
+      </nav>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,108 @@
+# Sveltia CMS configuration.
+# Docs: https://github.com/sveltia/sveltia-cms
+#
+# SETUP (see README.md → "Content editing / CMS"):
+#   1. Set `repo` below to your GitHub "owner/repository".
+#   2. Because the site is hosted on Vercel (no built-in auth), deploy the free
+#      `sveltia-cms-auth` OAuth relay (Cloudflare Workers) and set `base_url` to it.
+#   3. Register a GitHub OAuth App whose callback points at that relay.
+# Editors then log in at /admin with a GitHub account that has repo write access.
+
+backend:
+  name: github
+  repo: OWNER/REPO # <-- CHANGE ME (e.g. candor-concrete/candor_concrete_site)
+  branch: main
+  base_url: https://REPLACE-WITH-OAUTH-RELAY # <-- CHANGE ME (sveltia-cms-auth URL)
+
+# Local editing: writes directly to the files in this repo (run `npx @sveltia/cms
+# proxy-server` alongside `npm run dev`). Comment this out for production.
+local_backend: true
+
+# Uploaded images go here and are referenced as /uploads/<file> in content.
+media_folder: 'public/uploads'
+public_folder: '/uploads'
+
+site_url: https://www.candorcrete.com
+display_url: https://www.candorcrete.com
+
+collections:
+  # --- Services -----------------------------------------------------------
+  - name: services
+    label: Services
+    label_singular: Service
+    folder: src/content/services
+    create: true
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: '{{title}}'
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: shortTitle, label: Short title (nav/cards), widget: string, required: false }
+      - { name: order, label: Sort order, widget: number, default: 0, value_type: int }
+      - { name: summary, label: Summary (1–2 sentences), widget: text }
+      - { name: image, label: Hero image, widget: image, required: false }
+      - { name: imageAlt, label: Hero image alt text, widget: string, required: false }
+      - { name: features, label: "What's included", widget: list, field: { name: item, label: Feature, widget: string }, required: false }
+      - name: faqs
+        label: FAQs
+        widget: list
+        required: false
+        fields:
+          - { name: question, label: Question, widget: string }
+          - { name: answer, label: Answer, widget: text }
+      - { name: seoTitle, label: SEO title (optional), widget: string, required: false }
+      - { name: seoDescription, label: SEO description (optional), widget: text, required: false }
+      - { name: draft, label: Hide from site (draft), widget: boolean, default: false }
+      - { name: body, label: Body content, widget: markdown }
+
+  # --- Testimonials -------------------------------------------------------
+  - name: testimonials
+    label: Testimonials
+    label_singular: Testimonial
+    folder: src/content/testimonials
+    create: true
+    slug: '{{fields.name}}-{{year}}{{month}}'
+    extension: md
+    format: frontmatter
+    identifier_field: name
+    summary: '{{fields.name}} — {{fields.rating}}★'
+    fields:
+      - { name: name, label: Customer name, widget: string }
+      - { name: location, label: Location (e.g. Greer, SC), widget: string, required: false }
+      - { name: rating, label: Star rating, widget: number, default: 5, min: 1, max: 5, value_type: int }
+      - { name: quote, label: Review text, widget: text }
+      - { name: date, label: Date, widget: datetime, required: false, date_format: 'YYYY-MM-DD', time_format: false }
+      - { name: featured, label: Feature on homepage, widget: boolean, default: false }
+      - { name: body, label: Notes (not shown on site), widget: markdown, required: false }
+
+  # --- Gallery ------------------------------------------------------------
+  - name: gallery
+    label: Gallery
+    label_singular: Photo
+    folder: src/content/gallery
+    create: true
+    slug: '{{fields.category}}-{{slug}}'
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: '{{title}} ({{fields.category}})'
+    fields:
+      - { name: title, label: Title / caption, widget: string }
+      - { name: image, label: Photo, widget: image }
+      - { name: alt, label: Alt text (describe the photo for SEO), widget: string }
+      - name: category
+        label: Category
+        widget: select
+        default: Other
+        options:
+          - Driveways
+          - Patios
+          - Foundations
+          - Stamped Concrete
+          - Overlays
+          - Commercial
+          - Other
+      - { name: featured, label: Feature on homepage, widget: boolean, default: false }
+      - { name: order, label: Sort order, widget: number, default: 0, value_type: int }

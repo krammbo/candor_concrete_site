@@ -1,0 +1,22 @@
+{
+  "name": "candor-concrete-site",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Marketing website for Candor Concrete Company LLC — Greenville, SC",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource/anton": "^5.1.0",
+    "@fontsource/kaushan-script": "^5.1.0",
+    "@fontsource/work-sans": "^5.1.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "astro": "^5.1.0",
+    "tailwindcss": "^4.0.0"
+  }
+}

@@ -1,0 +1,77 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const items = (await getCollection('gallery')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+// Distinct categories present, for the filter chips.
+const categories = [...new Set(items.map((i) => i.data.category))].sort();
+---
+
+<BaseLayout
+  title="Project Gallery | Candor Concrete, Greenville SC"
+  description="Browse recent concrete projects by Candor Concrete in Greenville, SC — driveways, patios, stamped concrete, foundations and more."
+>
+  <section class="bg-ink text-cream">
+    <div class="container-wide py-16">
+      <p class="script-accent text-xl">Our Work</p>
+      <h1 class="mt-2 text-4xl sm:text-5xl text-cream">Project Gallery</h1>
+      <p class="mt-4 max-w-2xl text-cream/85">
+        A look at recent concrete projects across the Greenville area.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-16">
+    {
+      items.length === 0 ? (
+        <div class="rounded-lg border border-dashed border-sand-dark bg-sand-light p-12 text-center">
+          <h2 class="text-2xl text-ink">Photos coming soon</h2>
+          <p class="mx-auto mt-3 max-w-md text-ink-soft">
+            We’re adding photos of our latest projects. In the meantime, reach out
+            to see examples of work like yours.
+          </p>
+          <div class="mt-6">
+            <Button href="/contact/">Request Examples</Button>
+          </div>
+        </div>
+      ) : (
+        <>
+          {categories.length > 1 && (
+            <div class="mb-8 flex flex-wrap gap-2">
+              {categories.map((c) => (
+                <span class="rounded-full border border-sand-dark bg-sand-light px-3 py-1 text-sm text-ink-soft">
+                  {c}
+                </span>
+              ))}
+            </div>
+          )}
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((item) => (
+              <figure class="overflow-hidden rounded-lg border border-sand-dark bg-cream">
+                <img
+                  src={item.data.image}
+                  alt={item.data.alt}
+                  width="600"
+                  height="450"
+                  loading="lazy"
+                  class="aspect-[4/3] w-full object-cover"
+                />
+                <figcaption class="flex items-center justify-between gap-2 p-3 text-sm">
+                  <span class="font-semibold text-ink">{item.data.title}</span>
+                  <span class="text-ink-soft/70">{item.data.category}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </>
+      )
+    }
+  </section>
+
+  <CtaBand />
+</BaseLayout>
