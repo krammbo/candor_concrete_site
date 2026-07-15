@@ -37,7 +37,14 @@ const thankYouURL = new URL('/thank-you/', Astro.site).toString();
         class="grid gap-5"
       >
         <input type="hidden" name="_subject" value="New estimate request from candorcrete.com" />
-        {site.formspreeId && <input type="hidden" name="_next" value={thankYouURL} />}
+        {site.formspreeId && (
+          <>
+            <input type="hidden" name="_next" id="form-next" value={thankYouURL} />
+            <script is:inline>
+              {`document.getElementById('form-next').value = window.location.origin + '/thank-you/';`}
+            </script>
+          </>
+        )}
         <!-- Honeypot spam trap -->
         <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
