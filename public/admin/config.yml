@@ -10,13 +10,13 @@
 
 backend:
   name: github
-  repo: OWNER/REPO # <-- CHANGE ME (e.g. candor-concrete/candor_concrete_site)
+  repo: krammbo/candor_concrete_site
   branch: main
-  base_url: https://REPLACE-WITH-OAUTH-RELAY # <-- CHANGE ME (sveltia-cms-auth URL)
+  base_url: https://REPLACE-WITH-OAUTH-RELAY # <-- still needed: your sveltia-cms-auth URL
 
-# Local editing: writes directly to the files in this repo (run `npx @sveltia/cms
-# proxy-server` alongside `npm run dev`). Comment this out for production.
-local_backend: true
+# Local editing (dev only): uncomment to write directly to local files via
+# `npx decap-server`. Must stay OFF in production so the GitHub backend is used.
+# local_backend: true
 
 # Uploaded images go here and are referenced as /uploads/<file> in content.
 media_folder: 'public/uploads'
