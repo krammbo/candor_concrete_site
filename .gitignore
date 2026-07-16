@@ -1,3 +1,6 @@
+# bulk gallery import staging (raw originals — optimized copies are committed)
+gallery-import/
+
 # build output
 dist/
 # generated types
