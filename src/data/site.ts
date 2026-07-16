@@ -19,6 +19,13 @@ export const site = {
   description:
     'Candor Concrete delivers durable, high-quality residential concrete in Greenville, SC and the Upstate. Driveways, patios, foundations, stamped concrete & overlays — built on honesty, focused on quality.',
 
+  /**
+   * Home-page hero background image. Drop a photo in the /public folder and set
+   * its path here, e.g. '/hero.jpg'. Leave blank to use the dark gradient only.
+   * Best results: a landscape photo ~2000px wide, saved as a compressed JPG.
+   */
+  heroImage: '/hero.jpg' as string,
+
   // Contact / NAP — keep consistent everywhere for local SEO.
   phone: '(864) 914-9200',
   phoneHref: 'tel:+18649149200',

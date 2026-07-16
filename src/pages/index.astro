@@ -43,7 +43,27 @@ const values = [
 >
   <!-- Hero -->
   <section class="relative bg-ink text-cream overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-ink via-ink to-orange-dark/40" aria-hidden="true"></div>
+    {
+      site.heroImage && (
+        <img
+          src={site.heroImage}
+          alt=""
+          aria-hidden="true"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+      )
+    }
+    <!-- Dark overlay keeps the headline readable over any photo -->
+    <div
+      class:list={[
+        'absolute inset-0',
+        site.heroImage
+          ? 'bg-gradient-to-r from-ink/90 via-ink/75 to-ink/40'
+          : 'bg-gradient-to-br from-ink via-ink to-orange-dark/40',
+      ]}
+      aria-hidden="true"
+    >
+    </div>
     <div class="container-wide relative grid gap-8 py-20 lg:grid-cols-2 lg:items-center lg:py-28">
       <div>
         <p class="script-accent text-xl">Built on Honesty. Focused on Quality.</p>
