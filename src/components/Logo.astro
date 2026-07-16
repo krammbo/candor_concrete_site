@@ -1,8 +1,6 @@
 ---
 /**
- * Text-based wordmark placeholder styled to echo the logo (bold slab CANDOR +
- * CONCRETE). Once the real logo file is supplied, drop it in /public and swap
- * the markup below for an <img> — the surrounding link/sizing can stay.
+ * Site logo (Candor Concrete wordmark). SVG lives in /public.
  */
 interface Props {
   class?: string;
@@ -10,9 +8,12 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<a href="/" class={`inline-flex flex-col leading-none ${className}`} aria-label="Candor Concrete — home">
-  <span class="font-display text-2xl sm:text-3xl tracking-tight text-orange">
-    CANDOR<span class="text-ink"> CONCRETE</span>
-  </span>
-  <span class="script-accent text-sm -mt-0.5">Built on Honesty</span>
+<a href="/" class={`inline-flex items-center ${className}`} aria-label="Candor Concrete — home">
+  <img
+    src="/candorLogo.svg"
+    alt="Candor Concrete"
+    width="166"
+    height="59"
+    class="h-11 w-auto sm:h-12"
+  />
 </a>

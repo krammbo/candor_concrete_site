@@ -16,6 +16,8 @@
   --color-sand: #e9e4cb;
   --color-sand-light: #f5f2e6;
   --color-sand-dark: #ddd7ba;
+  /* Slightly deeper warm tan for the header so the cream logo reads clearly */
+  --color-header: #ddd0a0;
   --color-orange: #c85a2c;
   --color-orange-dark: #a8461f;
   --color-ink: #1e1b18;

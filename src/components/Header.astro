@@ -8,7 +8,7 @@ const isActive = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
 ---
 
-<header class="sticky top-0 z-50 bg-sand/95 backdrop-blur border-b border-sand-dark">
+<header class="sticky top-0 z-50 bg-header/95 backdrop-blur border-b border-sand-dark">
   <div class="container-wide flex items-center justify-between gap-4 py-3">
     <Logo />
 
@@ -46,7 +46,7 @@ const isActive = (href: string) =>
   </div>
 
   <input type="checkbox" id="nav-toggle" class="peer hidden" />
-  <div class="hidden peer-checked:block lg:!hidden border-t border-sand-dark bg-sand">
+  <div class="hidden peer-checked:block lg:!hidden border-t border-sand-dark bg-header">
     <nav class="container-wide flex flex-col py-3" aria-label="Mobile">
       {
         mainNav.map((item) => (
