@@ -3,6 +3,8 @@ title: Concrete Overlays
 shortTitle: Overlays
 order: 5
 summary: Resurface worn or dated concrete with a fresh, durable overlay — no full tear-out required.
+image: /uploads/overlayHero.jpg
+imageAlt: ''
 features:
   - Resurface driveways, patios & walkways
   - Decorative & colored overlay finishes
