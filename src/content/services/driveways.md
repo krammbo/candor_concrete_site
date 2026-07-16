@@ -3,7 +3,7 @@ title: Concrete Driveways
 shortTitle: Driveways
 order: 1
 summary: Durable, clean-finished concrete driveways that boost curb appeal and stand up to Upstate weather for decades.
-image: /uploads/heroDriveway.jpg
+image: /uploads/drivewayHero.jpg
 imageAlt: ''
 features:
   - New driveway installation & full replacement
