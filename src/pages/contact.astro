@@ -10,7 +10,6 @@ const services = (await getCollection('services'))
 const formAction = site.formspreeId
   ? `https://formspree.io/f/${site.formspreeId}`
   : site.emailHref;
-const thankYouURL = new URL('/thank-you/', Astro.site).toString();
 ---
 
 <BaseLayout
@@ -32,19 +31,12 @@ const thankYouURL = new URL('/thank-you/', Astro.site).toString();
     <!-- Form -->
     <div>
       <form
+        id="estimate-form"
         action={formAction}
         method="POST"
         class="grid gap-5"
       >
         <input type="hidden" name="_subject" value="New estimate request from candorcrete.com" />
-        {site.formspreeId && (
-          <>
-            <input type="hidden" name="_next" id="form-next" value={thankYouURL} />
-            <script is:inline>
-              {`document.getElementById('form-next').value = window.location.origin + '/thank-you/';`}
-            </script>
-          </>
-        )}
         <!-- Honeypot spam trap -->
         <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
@@ -96,11 +88,14 @@ const thankYouURL = new URL('/thank-you/', Astro.site).toString();
         </label>
 
         <button
+          id="submit-btn"
           type="submit"
-          class="inline-flex items-center justify-center rounded-md bg-orange px-6 py-3 font-semibold uppercase tracking-wide text-sm text-cream transition-colors hover:bg-orange-dark"
+          class="inline-flex items-center justify-center rounded-md bg-orange px-6 py-3 font-semibold uppercase tracking-wide text-sm text-cream transition-colors hover:bg-orange-dark disabled:opacity-60"
         >
           Send My Request
         </button>
+
+        <p id="form-error" class="hidden text-sm font-medium text-red-700" role="alert"></p>
 
         {
           !site.formspreeId && (
@@ -111,6 +106,60 @@ const thankYouURL = new URL('/thank-you/', Astro.site).toString();
           )
         }
       </form>
+
+      <div
+        id="form-success"
+        class="hidden rounded-lg border border-sand-dark bg-sand-light p-8 text-center"
+        role="status"
+      >
+        <h2 class="text-2xl text-ink">Thank You!</h2>
+        <p class="mt-3 text-ink-soft">
+          Your request is in — we’ll get back to you shortly with your free
+          estimate. Need us sooner? Call
+          <a href={site.phoneHref} class="font-bold text-orange">{site.phone}</a>.
+        </p>
+      </div>
+
+      <script define:vars={{ phone: site.phone }}>
+        (function () {
+          const form = document.getElementById('estimate-form');
+          if (!form) return;
+          const action = form.getAttribute('action') || '';
+          // Only enhance the Formspree endpoint; a mailto fallback posts normally.
+          if (!/^https?:/.test(action)) return;
+
+          const success = document.getElementById('form-success');
+          const errorEl = document.getElementById('form-error');
+          const btn = document.getElementById('submit-btn');
+
+          form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorEl.classList.add('hidden');
+            const label = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Sending…';
+            try {
+              const res = await fetch(action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { Accept: 'application/json' },
+              });
+              if (!res.ok) throw new Error('Request failed');
+              form.reset();
+              form.classList.add('hidden');
+              success.classList.remove('hidden');
+              success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } catch (err) {
+              errorEl.textContent =
+                'Sorry, something went wrong sending your request. Please call us at ' +
+                phone + ' or try again.';
+              errorEl.classList.remove('hidden');
+              btn.disabled = false;
+              btn.textContent = label;
+            }
+          });
+        })();
+      </script>
     </div>
 
     <!-- Contact details -->
