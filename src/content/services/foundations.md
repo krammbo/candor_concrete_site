@@ -3,6 +3,8 @@ title: Concrete Foundations
 shortTitle: Foundations
 order: 3
 summary: Solid, code-compliant concrete foundations and slabs — the base every quality build depends on.
+image: /uploads/heroImageFoundation.jpg
+imageAlt: ''
 features:
   - Slab-on-grade & footing foundations
   - Garage, addition & outbuilding slabs
