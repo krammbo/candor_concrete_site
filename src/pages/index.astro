@@ -6,6 +6,7 @@ import ServiceCard from '../components/ServiceCard.astro';
 import TestimonialCard from '../components/TestimonialCard.astro';
 import GoogleReviews from '../components/GoogleReviews.astro';
 import CtaBand from '../components/CtaBand.astro';
+import TrustBar from '../components/TrustBar.astro';
 import { site, serviceAreas } from '../data/site';
 
 const services = (await getCollection('services'))
@@ -84,6 +85,8 @@ const values = [
       </div>
     </div>
   </section>
+
+  <TrustBar />
 
   <!-- Values / why us -->
   <section class="container-wide py-16">
