@@ -3,6 +3,8 @@ title: Stamped Concrete
 shortTitle: Stamped Concrete
 order: 4
 summary: The high-end look of stone, brick, or wood with the durability and value of poured concrete.
+image: /uploads/stampedHero.jpg
+imageAlt: ''
 features:
   - Wide range of patterns & textures
   - Custom colors & accent tones
