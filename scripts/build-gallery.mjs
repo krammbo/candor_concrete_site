@@ -119,14 +119,18 @@ for (const file of files) {
 
   optimize(path.join(INPUT_DIR, file), imgPath);
 
-  const title = titleize(slug);
+  // Pure-numeric phone filenames make poor captions, so use a friendly title.
+  const title = /^\d+$/.test(slug) ? 'Concrete Project' : titleize(slug);
   const category = categoryFor(file);
+  // Quote string values so numeric-looking text isn't parsed as a YAML number.
+  const yaml = (s) => `"${String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+  const alt = `${title} by Candor Concrete in Greenville, SC`;
   const frontmatter = [
     '---',
-    `title: ${title}`,
-    `image: /uploads/gallery/${slug}.jpg`,
-    `alt: ${title} — concrete work by Candor Concrete in Greenville, SC`,
-    `category: ${category}`,
+    `title: ${yaml(title)}`,
+    `image: ${yaml(`/uploads/gallery/${slug}.jpg`)}`,
+    `alt: ${yaml(alt)}`,
+    `category: ${yaml(category)}`,
     'featured: false',
     `order: ${order++}`,
     '---',
