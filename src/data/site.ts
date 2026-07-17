@@ -17,7 +17,7 @@ export const site = {
   legalName: 'Candor Concrete Company LLC',
   tagline: 'Built on Honesty. Focused on Quality.',
   description:
-    'Candor Concrete delivers durable, high-quality residential concrete in Greenville, SC and the Upstate. Driveways, patios, foundations, stamped concrete & overlays — built on honesty, focused on quality.',
+    'Candor Concrete delivers durable, high-quality residential concrete in Greenville, SC and the Upstate. Driveways, patios, foundations, stamped concrete & overlays, built on honesty, focused on quality.',
 
   /**
    * Home-page hero background image. Drop a photo in the /public folder and set
@@ -26,7 +26,7 @@ export const site = {
    */
   heroImage: '/hero.jpg' as string,
 
-  // Contact / NAP — keep consistent everywhere for local SEO.
+  // Contact / NAP, keep consistent everywhere for local SEO.
   phone: '(864) 914-9200',
   phoneHref: 'tel:+18649149200',
   email: 'Info@candorcrete.com',
@@ -45,7 +45,7 @@ export const site = {
   // Approximate coordinates for Greenville, SC (used in LocalBusiness schema).
   geo: { latitude: 34.8526, longitude: -82.394 },
 
-  // Business hours — CONFIRM with client before launch. Used in schema + footer.
+  // Business hours, CONFIRM with client before launch. Used in schema + footer.
   hours: [
     { days: 'Monday – Friday', open: '07:00', close: '17:00' },
     { days: 'Saturday', open: '08:00', close: '14:00' },

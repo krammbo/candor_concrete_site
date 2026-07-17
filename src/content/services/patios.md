@@ -2,7 +2,7 @@
 title: Concrete Patios
 shortTitle: Patios
 order: 2
-summary: Custom concrete patios that turn your backyard into an outdoor living space — built to last and finished to match your style.
+summary: Custom concrete patios that turn your backyard into an outdoor living space, built to last and finished to match your style.
 image: /uploads/patioHero.jpg
 imageAlt: ''
 features:

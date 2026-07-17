@@ -2,7 +2,7 @@
 title: Commercial Concrete
 shortTitle: Commercial
 order: 6
-summary: Reliable commercial concrete work for businesses across the Upstate — done on schedule and built to last.
+summary: Reliable commercial concrete work for businesses across the Upstate, done on schedule and built to last.
 image: /uploads/heroCommercial.jpg
 imageAlt: ''
 features:

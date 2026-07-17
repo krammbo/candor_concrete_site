@@ -2,7 +2,7 @@
 title: Concrete Foundations
 shortTitle: Foundations
 order: 3
-summary: Solid, code-compliant concrete foundations and slabs — the base every quality build depends on.
+summary: Solid, code-compliant concrete foundations and slabs, the base every quality build depends on.
 image: /uploads/heroImageFoundation.jpg
 imageAlt: ''
 features:
@@ -22,8 +22,8 @@ seoTitle: Concrete Foundations & Slabs | Greenville, SC | Candor Concrete
 seoDescription: Concrete foundation and slab contractor in Greenville, SC. Garage slabs, additions & outbuilding foundations built level, square, and to code. Free estimates.
 ---
 
-Everything you build sits on its foundation — so it has to be right. Candor Concrete pours foundations and slabs that are level, square, properly reinforced, and built to code, giving your project a base you can count on for the long haul.
+Everything you build sits on its foundation, so it has to be right. Candor Concrete pours foundations and slabs that are level, square, properly reinforced, and built to code, giving your project a base you can count on for the long haul.
 
-From garage and workshop slabs to foundations for home additions and outbuildings, we handle the excavation, forming, reinforcement, and pour with the same attention to detail we bring to every job. We use the correct concrete mix and vapor barriers for your application, and we never cut corners on base prep — because that's where foundation problems start.
+From garage and workshop slabs to foundations for home additions and outbuildings, we handle the excavation, forming, reinforcement, and pour with the same attention to detail we bring to every job. We use the correct concrete mix and vapor barriers for your application, and we never cut corners on base prep, because that's where foundation problems start.
 
 Planning a build or addition? Get an honest estimate from a contractor who takes the groundwork seriously.

@@ -19,6 +19,6 @@ const stars = Math.max(0, Math.min(5, Math.round(rating)));
   </div>
   <blockquote class="mt-4 flex-1 text-ink-soft leading-relaxed">“{quote}”</blockquote>
   <figcaption class="mt-4 font-semibold text-ink">
-    {name}{location && <span class="font-normal text-ink-soft"> — {location}</span>}
+    {name}{location && <span class="font-normal text-ink-soft">, {location}</span>}
   </figcaption>
 </figure>
