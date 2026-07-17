@@ -61,7 +61,7 @@ export const site = {
    * https://featurable.com, connect the Google Business Profile, and paste the
    * widget ID here. Reviews then auto-sync daily with no further code changes.
    */
-  featurableWidgetId: '' as string,
+  featurableWidgetId: 'f10e8cf2-f6b8-417c-bf03-e96ab4d31059' as string,
 
   /**
    * Formspree form ID for the estimate form. Create a free form at
