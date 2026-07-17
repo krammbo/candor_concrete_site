@@ -33,6 +33,10 @@ export const site = {
   emailHref: 'mailto:Info@candorcrete.com',
 
   address: {
+    // Optional public street address. Fill in to strengthen local SEO and match
+    // your Google Business Profile. Leave '' for a home-based / service-area-only
+    // business (the schema then omits streetAddress but keeps city + areaServed).
+    street: '' as string,
     city: 'Greenville',
     region: 'SC',
     postalCode: '29690',

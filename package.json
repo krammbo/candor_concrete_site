@@ -9,6 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "gallery": "node scripts/build-gallery.mjs",
+    "og": "node scripts/build-og.mjs",
+    "icons": "node scripts/build-icons.mjs",
     "astro": "astro"
   },
   "dependencies": {

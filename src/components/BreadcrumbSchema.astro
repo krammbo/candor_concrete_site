@@ -1,0 +1,29 @@
+---
+/**
+ * BreadcrumbList JSON-LD. Helps Google render the breadcrumb trail in results.
+ * Pass the visible breadcrumb items (a "Home" crumb is added automatically).
+ */
+interface Crumb {
+  name: string;
+  path: string;
+}
+interface Props {
+  items: Crumb[];
+}
+const { items } = Astro.props;
+
+const crumbs: Crumb[] = [{ name: 'Home', path: '/' }, ...items];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.name,
+    item: new URL(c.path, Astro.site).toString(),
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

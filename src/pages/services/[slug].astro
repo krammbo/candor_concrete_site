@@ -4,6 +4,7 @@ import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/Button.astro';
 import CtaBand from '../../components/CtaBand.astro';
+import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro';
 import { site } from '../../data/site';
 
 export const getStaticPaths = (async () => {
@@ -52,6 +53,13 @@ const faqSchema =
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
   {faqSchema && <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  <BreadcrumbSchema
+    slot="head"
+    items={[
+      { name: 'Services', path: '/services/' },
+      { name: d.title, path: `/services/${entry.id}/` },
+    ]}
+  />
 
   <!-- Hero -->
   <section class="bg-ink text-cream">

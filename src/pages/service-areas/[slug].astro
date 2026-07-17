@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/Button.astro';
 import GoogleReviews from '../../components/GoogleReviews.astro';
 import CtaBand from '../../components/CtaBand.astro';
+import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro';
 import { site, serviceAreas } from '../../data/site';
 
 export const getStaticPaths = (async () => {
@@ -37,6 +38,13 @@ const schema = {
   description={`Looking for a concrete contractor in ${cityState}? Candor Concrete builds driveways, patios, foundations & stamped concrete with honesty and quality. Free estimates — call ${site.phone}.`}
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <BreadcrumbSchema
+    slot="head"
+    items={[
+      { name: 'Service Areas', path: '/service-areas/' },
+      { name: cityState, path: `/service-areas/${area.slug}/` },
+    ]}
+  />
 
   <section class="bg-ink text-cream">
     <div class="container-wide py-14">
