@@ -19,6 +19,7 @@
     "@fontsource/kaushan-script": "^5.1.0",
     "@fontsource/work-sans": "^5.1.0",
     "@tailwindcss/vite": "^4.0.0",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^5.1.0",
     "tailwindcss": "^4.0.0"
   }
