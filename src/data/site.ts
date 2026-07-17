@@ -37,13 +37,13 @@ export const site = {
     // your Google Business Profile. Leave '' for a home-based / service-area-only
     // business (the schema then omits streetAddress but keeps city + areaServed).
     street: '' as string,
-    city: 'Greenville',
+    city: 'Travelers Rest',
     region: 'SC',
     postalCode: '29690',
     country: 'US',
   },
-  // Approximate coordinates for Greenville, SC (used in LocalBusiness schema).
-  geo: { latitude: 34.8526, longitude: -82.394 },
+  // Approximate coordinates for Travelers Rest, SC (used in LocalBusiness schema).
+  geo: { latitude: 34.9668, longitude: -82.4363 },
 
   // Business hours, CONFIRM with client before launch. Used in schema + footer.
   hours: [
